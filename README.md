@@ -17,7 +17,7 @@ The `FitnessLogBatch` class reads n runs from a given results folder. The result
 ```
 
 # Running
-You will have to modify `analysis/__main__.py` to specify the location of the results. In the future this should be a command line argument.
+You will have to modify `analysis/__main__.py` to specify the root location of all results. In the future this should be a command line argument.
 To run, use the command:
 ```
 $ python3 analysis/
