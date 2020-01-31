@@ -1,0 +1,21 @@
+{
+    "RESULTS_DIR": "/home/jak5763/Dropbox/TransferLearning/gecco/results/engine_par",
+    "c172_to_pa28_all" : {
+        "C172 to PA28 [Dropped V1]": "c172_pa28/dropped_ver_1",
+        "C172 to PA28 [Dropped V2]": "c172_pa28/dropped_ver_2",
+        "C172 to PA28 [Dropped V3]": "c172_pa28/dropped_ver_3",
+        "C172 to PA28 [Non-dropped]": "c172_pa28/dropped_ver_none"
+    },
+    "c172_to_pa44_all" : {
+        "C172 to PA44 [Dropped V1]": "c172_pa44/dropped_ver_1",
+        "C172 to PA44 [Dropped V2]": "c172_pa44/dropped_ver_2",
+        "C172 to PA44 [Dropped V3]": "c172_pa44/dropped_ver_3",
+        "C172 to PA44 [Non-dropped]": "c172_pa44/dropped_ver_none"
+    },
+    "pa28_to_pa44_all" : {
+        "PA28 to PA44 [Dropped V1]": "pa28_pa44/dropped_ver_1",
+        "PA28 to PA44 [Dropped V2]": "pa28_pa44/dropped_ver_2",
+        "PA28 to PA44 [Dropped V3]": "pa28_pa44/dropped_ver_3",
+        "PA28 to PA44 [Non-dropped]": "pa28_pa44/dropped_ver_none"
+    }
+}
