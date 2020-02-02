@@ -1,21 +1,48 @@
 {
     "RESULTS_DIR": "/home/jak5763/Dropbox/TransferLearning/gecco/results/engine_par",
-    "c172_to_pa28_all" : {
-        "C172 to PA28 [Dropped V1]": "c172_pa28/dropped_ver_1",
-        "C172 to PA28 [Dropped V2]": "c172_pa28/dropped_ver_2",
-        "C172 to PA28 [Dropped V3]": "c172_pa28/dropped_ver_3",
-        "C172 to PA28 [Non-dropped]": "c172_pa28/dropped_ver_none"
+    "basic_c172": {
+        "Basic C172": "basic_c172"
     },
-    "c172_to_pa44_all" : {
-        "C172 to PA44 [Dropped V1]": "c172_pa44/dropped_ver_1",
-        "C172 to PA44 [Dropped V2]": "c172_pa44/dropped_ver_2",
-        "C172 to PA44 [Dropped V3]": "c172_pa44/dropped_ver_3",
-        "C172 to PA44 [Non-dropped]": "c172_pa44/dropped_ver_none"
+    "basic_pa28": {
+        "Basic PA28": "basic_pa28"
     },
-    "pa28_to_pa44_all" : {
-        "PA28 to PA44 [Dropped V1]": "pa28_pa44/dropped_ver_1",
-        "PA28 to PA44 [Dropped V2]": "pa28_pa44/dropped_ver_2",
-        "PA28 to PA44 [Dropped V3]": "pa28_pa44/dropped_ver_3",
-        "PA28 to PA44 [Non-dropped]": "pa28_pa44/dropped_ver_none"
+    "basic_pa44": {
+        "Basic PA44": "basic_pa44"
+    },
+    "c172_pa28" : {
+        "C172 to PA28 [v_2 + v_3]": "c172_pa28/dropped_ver_1",
+        "C172 to PA28 [v_1 + v_3]": "c172_pa28/dropped_ver_2",
+        "C172 to PA28 [v_1 + v_2]": "c172_pa28/dropped_ver_3",
+        "C172 to PA28 [v_1 + v_2 + v_3]": "c172_pa28/dropped_ver_none"
+    },
+    "c172_pa44" : {
+        "C172 to PA44 [v_2 + v_3]": "c172_pa44/dropped_ver_1",
+        "C172 to PA44 [v_1 + v_3]": "c172_pa44/dropped_ver_2",
+        "C172 to PA44 [v_1 + v_2]": "c172_pa44/dropped_ver_3",
+        "C172 to PA44 [v_1 + v_2 + v_3]": "c172_pa44/dropped_ver_none"
+    },
+    "pa28_pa44" : {
+        "PA28 to PA44 [v_2 + v_3]": "pa28_pa44/dropped_ver_1",
+        "PA28 to PA44 [v_1 + v_3]": "pa28_pa44/dropped_ver_2",
+        "PA28 to PA44 [v_1 + v_2]": "pa28_pa44/dropped_ver_3",
+        "PA28 to PA44 [v_1 + v_2 + v_3]": "pa28_pa44/dropped_ver_none"
+    },
+    "pa28_c172" : {
+        "PA28 to C172 [v_2 + v_3]": "pa28_c172/dropped_ver_1",
+        "PA28 to C172 [v_1 + v_3]": "pa28_c172/dropped_ver_2",
+        "PA28 to C172 [v_1 + v_2]": "pa28_c172/dropped_ver_3",
+        "PA28 to C172 [v_1 + v_2 + v_3]": "pa28_c172/dropped_ver_none"
+    },
+    "pa44_pa28" : {
+        "PA44 to PA28 [v_2 + v_3]": "pa44_pa28/dropped_ver_1",
+        "PA44 to PA28 [v_1 + v_3]": "pa44_pa28/dropped_ver_2",
+        "PA44 to PA28 [v_1 + v_2]": "pa44_pa28/dropped_ver_3",
+        "PA44 to PA28 [v_1 + v_2 + v_3]": "pa44_pa28/dropped_ver_none"
+    },
+    "pa44_c172" : {
+        "PA44 to C172 [v_2 + v_3]": "pa44_c172/dropped_ver_1",
+        "PA44 to C172 [v_1 + v_3]": "pa44_c172/dropped_ver_2",
+        "PA44 to C172 [v_1 + v_2]": "pa44_c172/dropped_ver_3",
+        "PA44 to C172 [v_1 + v_2 + v_3]": "pa44_c172/dropped_ver_none"
     }
 }

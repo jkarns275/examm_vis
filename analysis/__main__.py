@@ -34,7 +34,7 @@ def main():
 
     plotter.ax.set_title("Transfer Learning from C172 to PA28 for Engine Parameters")
     plotter.ax.set_ylabel("Mean Squared Error")
-    plotter.ax.set_xlabel("Genome Number")
+    plotter.ax.set_xlabel("Genome Evaluated")
     
     #plotter.set_yrange(0.01, 0.05)
     #plotter.set_xrange(2000, 4000)

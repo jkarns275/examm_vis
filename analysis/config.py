@@ -61,7 +61,7 @@ class Config:
             self.validate_members(members)
 
     def validate_members(self, members):
-        assert len(members) > 1
+        assert len(members) > 0
         import os
         for mname, mpath in members.items():
             assert type(mpath) == str, f"Group member named {mname} does not have a string path."
