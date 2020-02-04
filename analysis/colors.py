@@ -2,8 +2,18 @@ from matplotlib import colors as mcolors
 from random import shuffle
 
 def make_colors():
-    colors = list(dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS).keys())
-    shuffle(colors)
+    colors = [
+        "tab:blue",
+        "tab:orange",
+        "tab:green",
+        "tab:red",
+        "tab:purple",
+        "tab:brown",
+        "tab:pink",
+        "tab:gray",
+        "tab:olive",
+        "tab:cyan"
+    ]
     return tuple(colors)
 
 class Colors:

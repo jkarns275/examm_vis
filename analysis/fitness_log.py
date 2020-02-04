@@ -27,19 +27,21 @@ class FitnessLog:
 
     def __init__(self, file_path):
         # python csv docs say use newline='' of using a file object
-        with open(file_path, newline='') as csvfile:
-            csv_reader = csv.reader(csvfile, delimiter=',')
-            self.data = []
+        self.data = []
+        try:
+            with open(file_path, newline='') as csvfile:
+                csv_reader = csv.reader(csvfile, delimiter=',')
 
-            # Ignore the first row because it is column names
-            for row in csv_reader:
-                break
-            
-            for row in csv_reader:
-                dp = DataPoint(*row)
-                self.data.append(dp)
-        print(f"LEN: {len(self.data)}")
-    
+                # Ignore the first row because it is column names
+                for row in csv_reader:
+                    break
+                
+                for row in csv_reader:
+                    dp = DataPoint(*row)
+                    self.data.append(dp)
+            print(f"LEN: {len(self.data)}; PATH: {file_path}")
+        except Exception as e:
+            print(e)
     def get_row_dict(self, index):
         dp = self.data[index]
         return {'genomes_inserted': dp.genomes,
@@ -131,8 +133,9 @@ class Plotter:
     def set_xrange(self, mi, ma):
         self.ax.set_xlim(mi, ma)
 
-    def set_font(self, family='normal', weight='bold', size=22):
-        mpl.rc('font', **{'family': family, 'weight': weight, 'size': 22})
+    @staticmethod
+    def set_font(family='normal', weight='normal', size=22):
+        mpl.rc('font', **{'family': family, 'weight': weight, 'size': size})
 
     def reset(self):
         self.fig, self.ax = plt.subplots()
@@ -144,10 +147,17 @@ class Plotter:
         self.ax.get_legend().remove()
         self.ax.legend(by_label.values(), by_label.keys())
 
-    def plot_batch(self, batch, color, label, show_min_max=True, start_time=0):
-        t = list(range(start_time, batch.longest_log_len + start_time))
-        self.ax.fill_between(t, batch.min_line, batch.max_line, alpha=0.25, color=color)
-        self.ax.plot(t, batch.mean_line, color=color, label=label)
+    def plot_batch(self, batch, color, label, show_min_max=True, start_time=0, truncate=None):
+        print(truncate)
+        if truncate is not None:
+            t = list(range(start_time, min(batch.longest_log_len, truncate) + start_time))
+            self.ax.fill_between(t, batch.min_line[:truncate], batch.max_line[:truncate], alpha=0.25, color=color)
+            self.ax.plot(t, batch.mean_line[:truncate], color=color, label=label)
+        else:
+            t = list(range(start_time, batch.longest_log_len + start_time))
+            self.ax.fill_between(t, batch.min_line, batch.max_line, alpha=0.25, color=color)
+            self.ax.plot(t, batch.mean_line, color=color, label=label)
+        
         self.fix_legend()
 
     def show(self):
