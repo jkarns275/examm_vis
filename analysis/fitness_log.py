@@ -40,8 +40,10 @@ class FitnessLog:
                     dp = DataPoint(*row)
                     self.data.append(dp)
             print(f"LEN: {len(self.data)}; PATH: {file_path}")
+            self.valid = True
         except Exception as e:
             print(e)
+            self.valid = False
     def get_row_dict(self, index):
         dp = self.data[index]
         return {'genomes_inserted': dp.genomes,
@@ -68,11 +70,20 @@ class FitnessLogBatch:
         self.logs = []
 
         for i in range(n):
-            self.logs.append(FitnessLog(f"{folder_path}/{i}/fitness_log.csv"))
-        self.longest_log_len = max(map(len, self.logs))
-        self.calculate_min_line()
-        self.calculate_max_line()
-        self.calculate_mean_line()
+            log = FitnessLog(f"{folder_path}/{i}/fitness_log.csv")
+            if log.valid:
+                self.logs.append(log)
+        
+        if len(self.logs) == 0:
+            self.valid = False
+        else:
+            self.longest_log_len = max(map(len, self.logs))
+            self.calculate_min_line()
+            self.calculate_max_line()
+            self.calculate_mean_line()
+            # Only valid if every entry is valid
+            # self.valid = sum(map(lambda log: 1 if log.valid else 0, self.logs)) == n
+            self.valid = True
 
     def calculate_max_line(self):
         max_line = np.full(self.longest_log_len, np.NINF)

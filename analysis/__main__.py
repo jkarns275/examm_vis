@@ -34,12 +34,16 @@ def main():
     for name, delay, truncate in cfg.to_plot:
         group = cfg.groups[name]
         for display_name, member in group.items():
-            plotter.plot_batch(FitnessLogBatch(f"{cfg.results_dir}/{member}", 10), Colors.next_color(), display_name, start_time=delay, truncate=truncate)
+            batch = FitnessLogBatch(f"{cfg.results_dir}/{member}", 10)
+            if batch.valid:
+                plotter.plot_batch(batch, Colors.next_color(), display_name, start_time=delay, truncate=truncate)
 
     plotter.ax.set_title(cfg.title)
     plotter.ax.set_ylabel("Mean Squared Error")
     plotter.ax.set_xlabel("Genomes Evaluated")
-    
+    sax = plotter.ax.secondary_xaxis('top', functions=(lambda x: x - 2000, lambda x: x + 2000))
+    sax.set_xlabel('Transfer Genomes Evaluated')
+
     plotter.set_yrange(0.01, 0.1)
     plotter.set_xrange(2000, 4000)
     mng = plt.get_current_fig_manager()

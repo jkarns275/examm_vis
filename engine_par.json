@@ -10,8 +10,6 @@
         "Basic PA44": "basic_pa44"
     },
     "c172_pa28" : {
-        "C172 to PA28 [v3]": "c172_pa28/solo_v3",
-        "C172 to PA28 [v2]": "c172_pa28/solo_v2",
         "C172 to PA28 [v2 + v3]": "c172_pa28/dropped_ver_1",
         "C172 to PA28 [v1 + v3]": "c172_pa28/dropped_ver_2",
         "C172 to PA28 [v1 + v2]": "c172_pa28/dropped_ver_3",
