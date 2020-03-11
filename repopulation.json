@@ -1,0 +1,37 @@
+{
+    "RESULTS_DIR": "/home/jak5763/Programming/exact/results/",
+    "e1500": {
+        "0 Killed, 0 Mutations": "k0m0",
+        "1 Killed, 0 Mutations": "k1m0",
+        "2 Killed, 0 Mutations": "k2m0",
+        "3 Killed, 0 Mutations": "k3m0",
+        "4 Killed, 0 Mutations": "k4m0",
+        "5 Killed, 0 Mutations": "k5m0",
+        "6 Killed, 0 Mutations": "k6m0",
+        "7 Killed, 0 Mutations": "k7m0",
+        "8 Killed, 0 Mutations": "k8m0",
+        "9 Killed, 0 Mutations": "k9m0",
+                                     
+        "0 Killed, 4 Mutations": "k0m4",
+        "1 Killed, 4 Mutations": "k1m4",
+        "2 Killed, 4 Mutations": "k2m4",
+        "3 Killed, 4 Mutations": "k3m4",
+        "4 Killed, 4 Mutations": "k4m4",
+        "5 Killed, 4 Mutations": "k5m4",
+        "6 Killed, 4 Mutations": "k6m4",
+        "7 Killed, 4 Mutations": "k7m4",
+        "8 Killed, 4 Mutations": "k8m4",
+        "9 Killed, 4 Mutations": "k9m4",
+                                     
+        "0 Killed, 8 Mutations": "k0m8",
+        "1 Killed, 8 Mutations": "k1m8",
+        "2 Killed, 8 Mutations": "k2m8",
+        "3 Killed, 8 Mutations": "k3m8",
+        "4 Killed, 8 Mutations": "k4m8",
+        "5 Killed, 8 Mutations": "k5m8",
+        "6 Killed, 8 Mutations": "k6m8",
+        "7 Killed, 8 Mutations": "k7m8",
+        "8 Killed, 8 Mutations": "k8m8",
+        "9 Killed, 8 Mutations": "k9m8"
+    }
+}

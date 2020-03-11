@@ -16,7 +16,8 @@ class DataPoint:
         self.nodes = int(enabled_nodes)
         self.edges = int(enabled_edges)
         self.rec_edges = int(enabled_rec_edges)
-    
+
+
     def __str__(self):
            return f"inserted genomes: {self.genomes}, bp_epochs: {self.bp_epochs}, " + \
                 f"time: {self.time}, best mae: {self.mae}, best mse: {self.mse}, " + \
@@ -25,9 +26,12 @@ class DataPoint:
 
 class FitnessLog:
 
-    def __init__(self, file_path):
+    def __init__(self, file_path, name, fold):
         # python csv docs say use newline='' of using a file object
         self.data = []
+        self.name = name
+        self.fold = fold
+
         try:
             with open(file_path, newline='') as csvfile:
                 csv_reader = csv.reader(csvfile, delimiter=',')
@@ -39,11 +43,16 @@ class FitnessLog:
                 for row in csv_reader:
                     dp = DataPoint(*row)
                     self.data.append(dp)
-            print(f"LEN: {len(self.data)}; PATH: {file_path}")
-            self.valid = True
+            self.valid = len(self.data) > 0
+            if self.valid:
+                self.breakthroughs = len(set(self.query(lambda l: l.mse)))
+        
         except Exception as e:
-            print(e)
             self.valid = False
+
+    def display(self):
+        print(f"    fold {self.fold}: len={len(self)}; min_mse={min(self.query(lambda l: l.mse))}; breakthrough_count={self.breakthroughs}")
+
     def get_row_dict(self, index):
         dp = self.data[index]
         return {'genomes_inserted': dp.genomes,
@@ -66,11 +75,12 @@ class FitnessLog:
 
 class FitnessLogBatch:
 
-    def __init__(self, folder_path, n):
+    def __init__(self, folder_path, n, batch_name):
         self.logs = []
+        self.batch_name = batch_name
 
         for i in range(n):
-            log = FitnessLog(f"{folder_path}/{i}/fitness_log.csv")
+            log = FitnessLog(f"{folder_path}/{i}/fitness_log.csv", batch_name, i)
             if log.valid:
                 self.logs.append(log)
         
@@ -81,9 +91,28 @@ class FitnessLogBatch:
             self.calculate_min_line()
             self.calculate_max_line()
             self.calculate_mean_line()
+            self.avg_breakthroughs = np.mean(list(map(lambda l: l.breakthroughs, self.logs)))
+            self.std_breakthroughs = np.std(list(map(lambda l: l.breakthroughs, self.logs)))
             # Only valid if every entry is valid
             # self.valid = sum(map(lambda log: 1 if log.valid else 0, self.logs)) == n
             self.valid = True
+    
+    def display_stats(self):
+        best_mses = list(map(lambda log: min(log.query(lambda l: l.mse)), self.logs))
+        # average of the best MSEs (lower MSE is better)
+        mean_best_mse = sum(best_mses) / len(self.logs)
+        # Lowest MSE out of all logs
+        min_best_mse = min(best_mses)
+        # Given the list of best MSEs from each log, which one is largest?
+        worst_best_mse = max(best_mses)
+
+        return  f"best: {min_best_mse}; worst: {worst_best_mse}; average: {mean_best_mse};\n" + \
+                f"avg_breakthroughs: {self.avg_breakthroughs} (stdev={self.std_breakthroughs})"
+
+    def display(self):
+        print(f"FitnessLogBatch {self.batch_name}: {self.display_stats()}")
+        for log in self.logs:
+            log.display()
 
     def calculate_max_line(self):
         max_line = np.full(self.longest_log_len, np.NINF)
@@ -158,15 +187,28 @@ class Plotter:
         self.ax.get_legend().remove()
         self.ax.legend(by_label.values(), by_label.keys())
 
+    def plot_log(self, log, color, label, start_time=0, truncate=None):
+        if truncate is not None:
+            t = list(range(start_time, min(len(log), truncate) + startime))
+            self.ax.plot(t, log.query(lambda d: d.mse)[:truncate], color=color, label=label)
+        else:
+            t = list(range(start_time, len(log) + startime))
+            self.ax.plot(t, log.query(lambda d: d.mse), color=color, label=label)
+
+    def plot_all_logs(self, batch, color, label, start_time=0, truncate=None):
+        for log in batch.logs:
+            self.plot_log(log, color, label, start_time, truncate)
+
     def plot_batch(self, batch, color, label, show_min_max=True, start_time=0, truncate=None):
-        print(truncate)
         if truncate is not None:
             t = list(range(start_time, min(batch.longest_log_len, truncate) + start_time))
-            self.ax.fill_between(t, batch.min_line[:truncate], batch.max_line[:truncate], alpha=0.25, color=color)
+            if show_min_max:
+                self.ax.fill_between(t, batch.min_line[:truncate], batch.max_line[:truncate], alpha=0.25, color=color)
             self.ax.plot(t, batch.mean_line[:truncate], color=color, label=label)
         else:
             t = list(range(start_time, batch.longest_log_len + start_time))
-            self.ax.fill_between(t, batch.min_line, batch.max_line, alpha=0.25, color=color)
+            if show_min_max:
+                self.ax.fill_between(t, batch.min_line, batch.max_line, alpha=0.25, color=color)
             self.ax.plot(t, batch.mean_line, color=color, label=label)
         
         self.fix_legend()

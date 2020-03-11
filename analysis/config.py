@@ -25,13 +25,17 @@ class Config:
                 help="If this is specified and IMAGE_DEST is not defined, the interactive window will have the specified dimensions. If it is specified, then the resulting image will have these dimensions.")
         parser.add_argument('-t', metavar='TITLE', type=str,default='default_title', action='store',
                 help='The title for the plot')
+        parser.add_argument('-p', dest='print', action='store_const',
+                                   const=True, default=False,
+                                   help='Print the logs.')
+
         args = parser.parse_args()
         self.width, self.height = 640, 480 if args.d is None else tuple(map(int, args.d.lower().split('x')))
         self.interactive = args.o is None
         self.title = args.t
         self.img_path = args.o
         self.to_plot = []
-        
+        self.should_print = args.print 
         for group in args.groups:
             if ':' in group:
                 r = group.split(':')
@@ -65,12 +69,13 @@ class Config:
         for name, members in self.groups.items():
             assert " " not in name, "Group names must not have spaces."
             assert type(members) == dict
-            self.validate_members(members)
+            print(name)
+            self.validate_members(members, name)
 
-    def validate_members(self, members):
+    def validate_members(self, members, name):
         assert len(members) > 0
         import os
         for mname, mpath in members.items():
             assert type(mpath) == str, f"Group member named {mname} does not have a string path."
-            if not os.path.isdir(f"{self.results_dir}/{mpath}"):
-                print(f"WARNING: folder {self.results_dir}/{mpath} does not exist")
+            if not os.path.isdir(f"{self.results_dir}/{name}/{mpath}"):
+                print(f"WARNING: folder {self.results_dir}/{name}/{mpath} does not exist")

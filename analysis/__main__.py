@@ -34,8 +34,11 @@ def main():
     for name, delay, truncate in cfg.to_plot:
         group = cfg.groups[name]
         for display_name, member in group.items():
-            batch = FitnessLogBatch(f"{cfg.results_dir}/{member}", 10)
+            batch = FitnessLogBatch(f"{cfg.results_dir}/{name}/{member}", 10, f"{name}/{member}")
             if batch.valid:
+                if cfg.should_print:
+                    print("AAA")
+                    batch.display()
                 plotter.plot_batch(batch, Colors.next_color(), display_name, start_time=delay, truncate=truncate)
 
     plotter.ax.set_title(cfg.title)
@@ -44,8 +47,8 @@ def main():
     sax = plotter.ax.secondary_xaxis('top', functions=(lambda x: x - 2000, lambda x: x + 2000))
     sax.set_xlabel('Transfer Genomes Evaluated')
 
-    plotter.set_yrange(0.01, 0.1)
-    plotter.set_xrange(2000, 4000)
+    plotter.set_yrange(0.0, 0.2)
+    plotter.set_xrange(0, 4000)
     mng = plt.get_current_fig_manager()
     mng.window.showMaximized()
     plt.tight_layout()
