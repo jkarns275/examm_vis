@@ -16,7 +16,7 @@ class DataPoint:
         self.nodes = int(enabled_nodes)
         self.edges = int(enabled_edges)
         self.rec_edges = int(enabled_rec_edges)
-
+        
 
     def __str__(self):
            return f"inserted genomes: {self.genomes}, bp_epochs: {self.bp_epochs}, " + \
@@ -160,6 +160,23 @@ class FitnessLogBatch:
             assert i > 0
 
         self.mean_line = np.true_divide(sums, ns)
+
+# Group of batches
+class FitnessLogGroup(FitnessLogBatch):
+
+    def __init__(self, batches, groupname):
+        self.logs = []
+        
+        for batch in batches:
+            for log in batch.logs:
+                if log.valid:
+                    self.logs.append(log)
+
+        self.longest_log_len = max(map(len, self.logs))
+        self.calculate_max_line()
+        self.calculate_min_line()
+        self.calculate_mean_line()
+        
 
 class Plotter:
 
