@@ -46,8 +46,9 @@ class FitnessLog:
             self.valid = len(self.data) > 0
             if self.valid:
                 self.breakthroughs = len(set(self.query(lambda l: l.mse)))
-        
+            print(f"{file_path} log len: {len(self)}")        
         except Exception as e:
+            print(str(e))
             self.valid = False
 
     def display(self):
@@ -91,6 +92,7 @@ class FitnessLogBatch:
             self.calculate_min_line()
             self.calculate_max_line()
             self.calculate_mean_line()
+            print(self.longest_log_len)
             self.avg_breakthroughs = np.mean(list(map(lambda l: l.breakthroughs, self.logs)))
             self.std_breakthroughs = np.std(list(map(lambda l: l.breakthroughs, self.logs)))
             # Only valid if every entry is valid
